@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.FormActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <RadioGroup
+            android:id="@+id/radioGroupTipoPessoa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radioPessoaFisica"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="Pessoa Física" />
+
+            <RadioButton
+                android:id="@+id/radioPessoaJuridica"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pessoa Jurídica" />
+        </RadioGroup>
+
+        <!-- Campo Nome -->
+        <EditText
+            android:id="@+id/editTextNome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nome"
+            android:inputType="text"
+            android:maxLines="1" />
+
+        <!-- Campo CPF (aparece somente se Pessoa Física for selecionada) -->
+        <EditText
+            android:id="@+id/editTextCpf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="CPF"
+            android:inputType="number"
+            android:maxLines="1" />
+
+        <!-- Campo Razão Social (aparece somente se Pessoa Jurídica for selecionada) -->
+        <EditText
+            android:id="@+id/editTextRazaoSocial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Razão Social"
+            android:inputType="text"
+            android:maxLines="1"
+            android:visibility="gone" />
+
+        <!-- Campo CNPJ (aparece somente se Pessoa Jurídica for selecionada) -->
+        <EditText
+            android:id="@+id/editTextCnpj"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="CNPJ"
+            android:inputType="number"
+            android:maxLines="1"
+            android:visibility="gone" />
+
+        <!-- Campo DDD/Telefone -->
+        <EditText
+            android:id="@+id/editTextDddTelefone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="DDD/Telefone"
+            android:inputType="phone"
+            android:maxLines="1" />
+
+        <!-- Campo E-mail -->
+        <EditText
+            android:id="@+id/editTextEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="E-mail"
+            android:inputType="textEmailAddress"
+            android:maxLines="1" />
+
+        <!-- Seção para adicionar endereço -->
+        <TextView
+            android:id="@+id/textViewEndereco"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Endereço(s)"
+            android:textStyle="bold" />
+
+        <!-- Botão para adicionar endereço -->
+        <Button
+            android:id="@+id/btnAdicionarEndereco"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Adicionar Endereço" />
+
+        <!-- Layout para listar os endereços adicionados -->
+        <LinearLayout
+            android:id="@+id/linearLayoutEnderecos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Aqui você pode criar campos de formulário para endereço com os devidos IDs e atributos -->
+            <!-- Exemplo:
+                 <TextView
+                     android:id="@+id/textViewEndereco1"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:text="Endereço 1" />
+                 <EditText
+                     android:id="@+id/editTextTipoEndereco1"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:hint="Tipo de Endereço"
+                     android:inputType="text"
+                     android:maxLines="1" />
+                 ... -->
+
+        </LinearLayout>
+
+        <!-- Botão para salvar -->
+        <Button
+            android:id="@+id/btnSalvar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Salvar" />
+
+    </LinearLayout>
+</ScrollView>

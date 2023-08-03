@@ -21,8 +21,13 @@ class RealmManager {
         }
     }
 
-    val getAllPessoas: RealmResults<Pessoa>
-        get() = realm.where(Pessoa::class.java).findAll()
+    fun getAllPessoasByFiltro(filtro: String?): List<Pessoa>{
+        return if(filtro.isNullOrEmpty()){
+            realm.where(Pessoa::class.java).findAll().toList()
+        }else{
+            realm.where(Pessoa::class.java).findAll().filter { i -> i.nome!!.contains(filtro,true) }
+        }
+    }
 
     fun deleteById(id: String) {
         val itemRealmObject = realm.where(Pessoa::class.java).equalTo("id", id).findFirst()
