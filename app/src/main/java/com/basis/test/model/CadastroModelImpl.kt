@@ -10,6 +10,10 @@ class CadastroModelImpl : ICadastroModel {
         return realm.getAllPessoasByFiltro(filtro)
     }
 
+    override fun getPessoa(pessoaId: String): Pessoa? {
+        return realm.getPessoa(pessoaId)
+    }
+
     override fun addPessoa(pessoa: Pessoa) {
        realm.addOrUpdate(pessoa)
     }

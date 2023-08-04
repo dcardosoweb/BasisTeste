@@ -22,13 +22,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true"
-                android:text="Pessoa Física" />
+                android:text="Pessoa Física"
+                tools:ignore="TouchTargetSizeCheck" />
 
             <RadioButton
                 android:id="@+id/radioPessoaJuridica"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Pessoa Jurídica" />
+                android:text="Pessoa Jurídica"
+                tools:ignore="TouchTargetSizeCheck" />
         </RadioGroup>
 
         <!-- Campo Nome -->
@@ -38,7 +40,8 @@
             android:layout_height="wrap_content"
             android:hint="Nome"
             android:inputType="text"
-            android:maxLines="1" />
+            android:maxLines="1"
+            android:minHeight="48dp" />
 
         <!-- Campo CPF (aparece somente se Pessoa Física for selecionada) -->
         <EditText
@@ -47,7 +50,8 @@
             android:layout_height="wrap_content"
             android:hint="CPF"
             android:inputType="number"
-            android:maxLines="1" />
+            android:maxLines="1"
+            android:minHeight="48dp" />
 
         <!-- Campo Razão Social (aparece somente se Pessoa Jurídica for selecionada) -->
         <EditText
@@ -70,22 +74,36 @@
             android:visibility="gone" />
 
         <!-- Campo DDD/Telefone -->
-        <EditText
-            android:id="@+id/editTextDddTelefone"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="DDD/Telefone"
-            android:inputType="phone"
-            android:maxLines="1" />
+            android:hint="@string/ddd_telefone">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextDddTelefone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="phone"
+                android:maxLines="1"
+                tools:ignore="TouchTargetSizeCheck" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Campo E-mail -->
-        <EditText
-            android:id="@+id/editTextEmail"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="E-mail"
-            android:inputType="textEmailAddress"
-            android:maxLines="1" />
+            android:hint="@string/e_mail">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                tools:ignore="TouchTargetSizeCheck" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Seção para adicionar endereço -->
         <TextView
@@ -103,30 +121,120 @@
             android:layout_height="wrap_content"
             android:text="Adicionar Endereço" />
 
-        <!-- Layout para listar os endereços adicionados -->
         <LinearLayout
-            android:id="@+id/linearLayoutEnderecos"
+            android:id="@+id/linearLayoutFormEndereco"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:paddingTop="16dp">
 
-            <!-- Aqui você pode criar campos de formulário para endereço com os devidos IDs e atributos -->
-            <!-- Exemplo:
-                 <TextView
-                     android:id="@+id/textViewEndereco1"
-                     android:layout_width="match_parent"
-                     android:layout_height="wrap_content"
-                     android:text="Endereço 1" />
-                 <EditText
-                     android:id="@+id/editTextTipoEndereco1"
-                     android:layout_width="match_parent"
-                     android:layout_height="wrap_content"
-                     android:hint="Tipo de Endereço"
-                     android:inputType="text"
-                     android:maxLines="1" />
-                 ... -->
+            <RadioGroup
+                android:id="@+id/radioGroupTipoEndereco"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radioEnderecoResidencial"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="Residencial" />
+
+                <RadioButton
+                    android:id="@+id/radioEnderecoComercial"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Comercial" />
+            </RadioGroup>
+
+            <!-- Campo Endereço -->
+            <EditText
+                android:id="@+id/editTextEndereco"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Endereço"
+                android:inputType="text"
+                android:maxLines="1"
+                android:minHeight="48dp" />
+
+            <!-- Campo Número -->
+            <EditText
+                android:id="@+id/editTextNumero"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Número"
+                android:inputType="number"
+                android:maxLines="1"
+                android:minHeight="48dp" />
+
+            <!-- Campo Complemento -->
+            <EditText
+                android:id="@+id/editTextComplemento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Complemento"
+                android:inputType="text"
+                android:maxLines="1"
+                android:minHeight="48dp" />
+
+            <!-- Campo Bairro -->
+            <EditText
+                android:id="@+id/editTextBairro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Bairro"
+                android:inputType="text"
+                android:maxLines="1"
+                android:minHeight="48dp" />
+
+            <!-- Campo CEP -->
+            <EditText
+                android:id="@+id/editTextCEP"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="CEP"
+                android:inputType="number"
+                android:maxLines="1"
+                android:minHeight="48dp" />
+
+            <!-- Campo Cidade -->
+            <EditText
+                android:id="@+id/editTextCidade"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Cidade"
+                android:inputType="text"
+                android:maxLines="1"
+                android:minHeight="48dp" />
+
+            <!-- Campo UF -->
+            <EditText
+                android:id="@+id/editTextUF"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="UF"
+                android:inputType="text"
+                android:maxLines="1"
+                android:minHeight="48dp" />
+
+            <!-- Botão para remover endereço -->
+            <Button
+                android:id="@+id/btnSalvarEndereco"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Salvar Endereço" />
 
         </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1"
+            android:scrollbars="vertical" />
 
         <!-- Botão para salvar -->
         <Button
@@ -135,6 +243,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="Salvar" />
+
+        <Button
+            android:id="@+id/btnExcluirEndereco"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Excluir" />
 
     </LinearLayout>
 </ScrollView>

@@ -1,5 +1,6 @@
 package com.basis.test.realmmananger
 
+import android.content.Context
 import com.basis.test.model.Pessoa
 import io.realm.Realm
 import io.realm.RealmConfiguration
@@ -27,6 +28,10 @@ class RealmManager {
         }else{
             realm.where(Pessoa::class.java).findAll().filter { i -> i.nome!!.contains(filtro,true) }
         }
+    }
+
+    fun getPessoa(pessoaId: String): Pessoa?{
+        return realm.where(Pessoa::class.java).equalTo("id", pessoaId).findFirst()
     }
 
     fun deleteById(id: String) {
