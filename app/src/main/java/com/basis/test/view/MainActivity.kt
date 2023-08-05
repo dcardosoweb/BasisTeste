@@ -66,11 +66,8 @@ class MainActivity() : AppCompatActivity(), IMainView{
         if(pessoaAdapter!=null){
             pessoaAdapter?.updateData(pessoas)
         }else {
-            // Crie o adaptador de endereços com uma lista vazia
-            enderecoAdapter = EnderecoAdapter(emptyList())
-
             // Crie o adaptador com a lista de todas as pessoas e o adaptador de endereços
-            pessoaAdapter = PessoaAdapter(pessoas, enderecoAdapter, this)
+            pessoaAdapter = PessoaAdapter(pessoas, presenterImpl)
 
             // Defina o layout manager e os adaptadores para o RecyclerViews
             binding.recyclerView.layoutManager = LinearLayoutManager(this)
@@ -86,6 +83,7 @@ class MainActivity() : AppCompatActivity(), IMainView{
     }
     override fun showMensagem(mensagem: String?) {
         exibirMensagem("Sucesso",mensagem)
+        filtrarPorNome("")
     }
 
     override fun showError(erro: String?) {

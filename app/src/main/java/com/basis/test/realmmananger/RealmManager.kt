@@ -24,14 +24,14 @@ class RealmManager {
 
     fun getAllPessoasByFiltro(filtro: String?): List<Pessoa>{
         return if(filtro.isNullOrEmpty()){
-            realm.where(Pessoa::class.java).findAll().toList()
+            realm.copyFromRealm(realm.where(Pessoa::class.java).findAll().toList())
         }else{
-            realm.where(Pessoa::class.java).findAll().filter { i -> i.nome!!.contains(filtro,true) }
+            realm.copyFromRealm(realm.where(Pessoa::class.java).findAll().filter { i -> i.nome!!.contains(filtro,true) })
         }
     }
 
     fun getPessoa(pessoaId: String): Pessoa?{
-        return realm.where(Pessoa::class.java).equalTo("id", pessoaId).findFirst()
+        return  realm.copyFromRealm(realm.where(Pessoa::class.java).equalTo("id", pessoaId).findFirst())
     }
 
     fun deleteById(id: String) {

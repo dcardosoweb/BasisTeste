@@ -13,4 +13,15 @@ open class Endereco : RealmObject(),Serializable {
    var cep: String? = null
    var cidade: String? = null
    var uf: String? = null
+
+   fun getEnderecoFormatado():String{
+      var endereco = StringBuilder()
+      endereco.append(this.endereco)
+      endereco.append(" Numero: ${numero ?: "-"} ")
+      endereco.append(" Complemento: ${complemento ?: "-"} ")
+      endereco.append(" Bairro: ${bairro} ")
+      endereco.append(" CEP: ${cep} ")
+      endereco.append(" Cidade/UF: ${cidade}/${uf}")
+      return endereco.toString()
+   }
 }

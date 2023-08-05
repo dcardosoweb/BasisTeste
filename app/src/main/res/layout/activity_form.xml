@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.FormActivity">
 
     <LinearLayout
@@ -34,58 +35,90 @@
         </RadioGroup>
 
         <!-- Campo Nome -->
-        <EditText
-            android:id="@+id/editTextNome"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nome"
-            android:inputType="text"
-            android:maxLines="1"
-            android:minHeight="48dp" />
+            android:id="@+id/textInputNome"
+            android:hint="*Nome">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextNome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:maxLines="1" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Campo CPF (aparece somente se Pessoa Física for selecionada) -->
-        <EditText
-            android:id="@+id/editTextCpf"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="CPF"
-            android:inputType="number"
-            android:maxLines="1"
-            android:minHeight="48dp" />
+            android:id="@+id/textInputCpf"
+            android:hint="*CPF">
+
+            <com.santalu.maskara.widget.MaskEditText
+                android:id="@+id/editTextCpf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                app:mask="___.___.___-__"
+                app:maskCharacter="_"
+                app:maskStyle="completable" />
+
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Campo Razão Social (aparece somente se Pessoa Jurídica for selecionada) -->
-        <EditText
-            android:id="@+id/editTextRazaoSocial"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Razão Social"
-            android:inputType="text"
-            android:maxLines="1"
-            android:visibility="gone" />
+            android:visibility="gone"
+            android:id="@+id/textInputRazaoSocial"
+            android:hint="*Razão Social">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextRazaoSocial"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:maxLines="1" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Campo CNPJ (aparece somente se Pessoa Jurídica for selecionada) -->
-        <EditText
-            android:id="@+id/editTextCnpj"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="CNPJ"
-            android:inputType="number"
-            android:maxLines="1"
-            android:visibility="gone" />
+            android:visibility="gone"
+            android:id="@+id/textInputCnpj"
+            android:hint="*CNPJ">
+
+            <com.santalu.maskara.widget.MaskEditText
+                android:id="@+id/editTextCnpj"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                app:mask="__.___.____/____-__"
+                app:maskCharacter="_"
+                app:maskStyle="completable" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Campo DDD/Telefone -->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/textInputTelefone"
             android:hint="@string/ddd_telefone">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.santalu.maskara.widget.MaskEditText
                 android:id="@+id/editTextDddTelefone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="phone"
-                android:maxLines="1"
-                tools:ignore="TouchTargetSizeCheck" />
+                android:inputType="number"
+                app:mask="(__)_____-____"
+                app:maskCharacter="_"
+                app:maskStyle="completable" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -93,6 +126,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/textInputEmail"
             android:hint="@string/e_mail">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -149,77 +183,120 @@
                     android:text="Comercial" />
             </RadioGroup>
 
-            <!-- Campo Endereço -->
-            <EditText
-                android:id="@+id/editTextEndereco"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Endereço"
-                android:inputType="text"
-                android:maxLines="1"
-                android:minHeight="48dp" />
+                android:id="@+id/textInputEndereco"
+                android:hint="*Endereço">
 
-            <!-- Campo Número -->
-            <EditText
-                android:id="@+id/editTextNumero"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextEndereco"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Número"
-                android:inputType="number"
-                android:maxLines="1"
-                android:minHeight="48dp" />
+                android:id="@+id/textInpuNumero"
+                android:hint="Número">
 
-            <!-- Campo Complemento -->
-            <EditText
-                android:id="@+id/editTextComplemento"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextNumero"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Complemento"
-                android:inputType="text"
-                android:maxLines="1"
-                android:minHeight="48dp" />
+                android:id="@+id/textInputComplemento"
+                android:hint="Complemento">
 
-            <!-- Campo Bairro -->
-            <EditText
-                android:id="@+id/editTextBairro"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextComplemento"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Bairro"
-                android:inputType="text"
-                android:maxLines="1"
-                android:minHeight="48dp" />
+                android:id="@+id/textInputBairro"
+                android:hint="*Bairro">
 
-            <!-- Campo CEP -->
-            <EditText
-                android:id="@+id/editTextCEP"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextBairro"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="CEP"
-                android:inputType="number"
-                android:maxLines="1"
-                android:minHeight="48dp" />
+                android:id="@+id/textInputCEP"
+                android:hint="*CEP">
 
-            <!-- Campo Cidade -->
-            <EditText
-                android:id="@+id/editTextCidade"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextCEP"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Cidade"
-                android:inputType="text"
-                android:maxLines="1"
-                android:minHeight="48dp" />
+                android:id="@+id/textInputCidade"
+                android:hint="*Cidade">
 
-            <!-- Campo UF -->
-            <EditText
-                android:id="@+id/editTextUF"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextCidade"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="UF"
-                android:inputType="text"
-                android:maxLines="1"
-                android:minHeight="48dp" />
+                android:id="@+id/textInputUF"
+                android:hint="*UF">
 
-            <!-- Botão para remover endereço -->
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextUF"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:maxLength="2"
+                    android:textAllCaps="true"
+                    android:maxLines="1"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
             <Button
                 android:id="@+id/btnSalvarEndereco"
                 android:layout_width="wrap_content"
@@ -243,12 +320,5 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="Salvar" />
-
-        <Button
-            android:id="@+id/btnExcluirEndereco"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Excluir" />
-
     </LinearLayout>
 </ScrollView>

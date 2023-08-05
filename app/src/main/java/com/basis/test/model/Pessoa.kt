@@ -16,5 +16,5 @@ open class Pessoa : RealmObject(),Serializable {
     var cnpj: String? = null
     var dddTelefone: String? = null
     var email: String? = null
-    var enderecos: RealmList<Endereco>? = null
+    var enderecos: RealmList<Endereco> = RealmList()
 }

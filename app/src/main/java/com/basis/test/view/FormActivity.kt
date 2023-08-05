@@ -1,29 +1,20 @@
 package com.basis.test.view
 
-import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.caelum.stella.validation.CNPJValidator
 import br.com.caelum.stella.validation.CPFValidator
-import com.basis.test.R
 import com.basis.test.adapter.EnderecoAdapter
-import com.basis.test.adapter.PessoaAdapter
 import com.basis.test.databinding.ActivityFormBinding
 import com.basis.test.model.Endereco
 import com.basis.test.model.Pessoa
 import com.basis.test.presenter.FormPresenterImpl
-import com.basis.test.presenter.MainPresenterImpl
-import io.realm.Realm
 import io.realm.RealmList
-import io.realm.kotlin.where
 
 class FormActivity : AppCompatActivity(), IFormView {
 
@@ -83,9 +74,11 @@ class FormActivity : AppCompatActivity(), IFormView {
         }
 
         binding.btnSalvarEndereco.setOnClickListener {
-            adicionarEndereco()
-            binding.linearLayoutFormEndereco.visibility = View.GONE
-            listarEndereco()
+            if(validarFormEndereco()) {
+                adicionarEndereco()
+                binding.linearLayoutFormEndereco.visibility = View.GONE
+                listarEndereco()
+            }
         }
 
         binding.btnSalvar.setOnClickListener {
@@ -100,71 +93,110 @@ class FormActivity : AppCompatActivity(), IFormView {
 
         binding.radioGroupTipoPessoa.setOnCheckedChangeListener { group, checkedId ->
             if(binding.radioPessoaFisica.id == checkedId){
-                binding.editTextCpf.visibility = View.VISIBLE
-                binding.editTextNome.visibility = View.VISIBLE
-                binding.editTextCnpj.visibility = View.GONE
-                binding.editTextRazaoSocial.visibility = View.GONE
-                binding.editTextCpf.text.clear()
-                binding.editTextNome.text.clear()
+                binding.textInputCpf.visibility = View.VISIBLE
+                binding.textInputNome.visibility = View.VISIBLE
+                binding.textInputCnpj.visibility = View.GONE
+                binding.textInputRazaoSocial.visibility = View.GONE
+                binding.editTextCpf.text?.clear()
+                binding.editTextNome.text?.clear()
             }else{
-                binding.editTextCpf.visibility = View.GONE
-                binding.editTextNome.visibility = View.GONE
-                binding.editTextCnpj.visibility = View.VISIBLE
-                binding.editTextRazaoSocial.visibility = View.VISIBLE
-                binding.editTextCnpj.text.clear()
-                binding.editTextRazaoSocial.text.clear()
+                binding.textInputCpf.visibility = View.GONE
+                binding.textInputNome.visibility = View.GONE
+                binding.textInputCnpj.visibility = View.VISIBLE
+                binding.textInputRazaoSocial.visibility = View.VISIBLE
+                binding.editTextCnpj.text?.clear()
+                binding.editTextRazaoSocial.text?.clear()
             }
         }
     }
 
     private fun validarForm(): Boolean {
-        val tipoPessoaFisica = binding.radioPessoaFisica.isChecked
+        var isValid=true
+        binding.textInputNome.error=null
+        binding.textInputCpf.error=null
+        binding.textInputRazaoSocial.error=null
+        binding.textInputCnpj.error=null
+        binding.textInputTelefone.error=null
 
-        val nome = binding.editTextNome.text.toString().trim()
-        val cpf = binding.editTextCpf.text.toString().trim()
-        val telefone = binding.editTextDddTelefone.text.toString().trim()
-        val email = binding.editTextEmail.text.toString().trim()
-
-        if (tipoPessoaFisica) {
-            if (nome.isEmpty()) {
-                exibirMensagemCampoObrigatorio("Nome")
-                return false
+        if (binding.radioPessoaFisica.isChecked) {
+            if (binding.editTextNome.text.toString().trim().isEmpty()) {
+                binding.textInputNome.error="Campo Obrigatório"
+                isValid= false
             }
 
-            if (cpf.isEmpty()) {
-                exibirMensagemCampoObrigatorio("CPF")
-                return false
+            if (binding.editTextCpf.text.toString().trim().isEmpty()) {
+                binding.textInputCpf.error="Campo Obrigatório"
+                isValid= false
             }
 
-            if (telefone.isEmpty()) {
-                exibirMensagemCampoObrigatorio("Telefone")
-                return false
+            var cpf = binding.editTextCpf.text.toString().replace(Regex("[^\\d]"), "")
+            if (!isValidCPF(cpf)) {
+                binding.textInputCpf.error="CPF Inválido"
+                isValid= false
             }
+
         } else {
-            val razaoSocial = binding.editTextRazaoSocial.text.toString().trim()
-            if (razaoSocial.isEmpty()) {
-                exibirMensagemCampoObrigatorio("Razão Social")
-                return false
+            if (binding.editTextRazaoSocial.text.toString().trim().isEmpty()) {
+                binding.textInputRazaoSocial.error="Campo Obrigatório"
+                isValid= false
             }
 
-            val cnpj = binding.editTextCnpj.text.toString().trim()
-            if (cnpj.isEmpty()) {
-                exibirMensagemCampoObrigatorio("CNPJ")
-                return false
+            if (binding.editTextCnpj.text.toString().trim().isEmpty()) {
+                binding.textInputCnpj.error="Campo Obrigatório"
+                isValid= false
             }
 
-            if (telefone.isEmpty()) {
-                exibirMensagemCampoObrigatorio("Telefone")
-                return false
+            var cnpj = binding.editTextCnpj.text.toString().replace(Regex("[^\\d]"), "")
+            if (!isValidCNPJ(cnpj)) {
+                binding.textInputCnpj.error="CNPJ Inválido"
+                isValid= false
             }
         }
 
-        if (email.isEmpty()) {
-            exibirMensagemCampoObrigatorio("E-mail")
-            return false
+        if (binding.editTextDddTelefone.text.toString().trim().isEmpty()) {
+            binding.textInputTelefone.error="Campo Obrigatório"
+            isValid= false
         }
 
-        return true
+        var telefone = binding.editTextDddTelefone.text.toString().replace(Regex("[^\\d]"), "")
+        if (telefone.length != 10 && telefone.length != 11) {
+            binding.textInputTelefone.error="Telefone Inválido"
+            isValid= false
+        }
+
+        return isValid
+    }
+
+    private fun validarFormEndereco():Boolean{
+        var isValid=true
+
+        if (binding.editTextEndereco.text.toString().trim().isEmpty()) {
+            binding.textInputEndereco.error="Campo Obrigatório"
+            isValid= false
+        }
+
+        if (binding.editTextBairro.text.toString().trim().isEmpty()) {
+            binding.textInputBairro.error="Campo Obrigatório"
+            isValid= false
+        }
+
+        if (binding.editTextCEP.text.toString().trim().isEmpty()) {
+            binding.textInputCEP.error="Campo Obrigatório"
+            isValid= false
+        }
+
+        if (binding.editTextCidade.text.toString().trim().isEmpty()) {
+            binding.textInputCidade.error="Campo Obrigatório"
+            isValid= false
+        }
+
+        if (binding.editTextUF.text.toString().trim().isEmpty()) {
+            binding.textInputUF.error="Campo Obrigatório"
+            isValid= false
+        }
+
+        return isValid
+
     }
 
     private fun criarObjetoPessoa(){
@@ -233,7 +265,7 @@ class FormActivity : AppCompatActivity(), IFormView {
         pessoa?.enderecos?.let {
             if(enderecoAdapter==null){
                 // Crie o adaptador de endereços
-                enderecoAdapter = EnderecoAdapter(it)
+                enderecoAdapter = EnderecoAdapter(it, this.pessoa!!)
                 // Defina o layout manager e os adaptadores para o RecyclerViews
                 binding.recyclerView.layoutManager = LinearLayoutManager(this)
                 binding.recyclerView.adapter = enderecoAdapter
@@ -251,8 +283,10 @@ class FormActivity : AppCompatActivity(), IFormView {
         val alert = AlertDialog.Builder(this@FormActivity)
         alert.setTitle(titulo)
         alert.setMessage(mensagem)
-        alert.setPositiveButton("OK") { dialog, id -> finish()  }
-        alert.show()
+        alert.setPositiveButton("OK") { dialog, id ->
+            finish()
+        }
+        alert.create().show()
     }
 
     override fun showMensagem(mensagem: String?) {
